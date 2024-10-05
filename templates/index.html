@@ -1,0 +1,56 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory Search - My Custom Flask App</title>
+    <!-- Include Bootstrap CSS via CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Inventory Search</h1>
+        <form method="post" action="/">
+            <div class="form-group">
+                <label for="product_id">Enter Product ID:</label>
+                <input type="text" class="form-control" id="product_id" name="product_id" placeholder="e.g., P001" value="{{ search_term }}">
+            </div>
+            <button type="submit" name="search" class="btn btn-primary">Search</button>
+            <button type="submit" name="show_all" class="btn btn-secondary">Show All Products</button>
+        </form>
+
+        {% if products is not none %}
+            {% if products %}
+                <h2 class="mt-5">Product List</h2>
+                <table class="table table-striped mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ProductID</th>
+                            <th>ProductName</th>
+                            <th>Category</th>
+                            <th>QuantityInStock</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.ProductID }}</td>
+                            <td>{{ product.ProductName }}</td>
+                            <td>{{ product.Category }}</td>
+                            <td>{{ product.QuantityInStock }}</td>
+                            <td>${{ "{:.2f}".format(product.Price) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="mt-3">No products found.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+    <!-- Include jQuery and Bootstrap JS via CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
